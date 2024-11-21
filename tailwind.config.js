@@ -4,8 +4,13 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {},
+  theme: { 
+    extend: { 
+      colors: { 
+        PastelPink: '#F8C8DC', 
+        PastelBlue: '#B3D9E8',
+      }, 
+    }, 
   },
   plugins: [],
 }
