@@ -1,6 +1,4 @@
 
-
-import SearchBar from "./Components/SearchBar"
 import HomePage from "./Pages/HomePage"
 
 
