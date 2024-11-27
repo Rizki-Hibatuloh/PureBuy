@@ -1,13 +1,14 @@
 import Category from '../Components/Category';
-import Navbar from '../Components/Navbar';
+import Cards from '../Components/Cards';
 
 
 function HomePage(){
     return(
-        <header>
-            <Navbar/>
-            <Category/>
-        </header>
+            <>
+            <Category />
+            <Cards />
+            </>
+       
     )
 }
 
