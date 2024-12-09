@@ -1,4 +1,4 @@
-import Navbar from '../Components/Navbar';
+
 import Category from '../Components/Category';
 import Cards from '../Components/Cards';
 import banner from '../assets/banner.jpg';
@@ -31,19 +31,18 @@ function HomePage(){
     },[dispatch])
     return(
         <>
-            <header className='sticky top-0 z-50'>
-            <Navbar />
-            </header>
             <section >
                     <Category categories={categories} onCategoryClick={handleCategoryClick}/>  
             </section>  
-            <section>
+            <section className='container  py-12 px-5'>
                 <div className="flex justify-center items-center mx-auto  w-full  m-2 p-2">
-                    <img src={banner} alt="banner.jpg" className='rounded-md h-52 w-full'/>
+                    <img src={banner} alt="banner.jpg" className='rounded-md h-80 w-full'/>
                 </div>
             </section>
-            <section className='container px-auto py-12'>
-                <h2 className='text-2xl font-bold mb-6 text-center bg-red-600 text-white'> Top Products</h2>
+            <section className='container px-auto py-12 px-5'>
+                <div className='flex justify-center items-center p-3 mb-5  '>
+                    <h2 className='text-2xl font-bold mb-6 bg-red-700 rounded-lg text-center w-60 text-white px-4 p-4 m-4 '> Shopping</h2>
+                </div>
                 <div className='grid grid-cols-1 sm-grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6'>
                     {filteredProducts.products.map(product => (
                     <Cards key={product.id} product={product} /> 

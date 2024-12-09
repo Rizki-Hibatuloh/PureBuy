@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import lineClamp from '@tailwindcss/line-clamp';
 export default {
   content: [
     "./index.html",
@@ -10,11 +9,12 @@ export default {
       colors: { 
         PastelPink: '#F8C8DC', 
         PastelBlue: '#B3D9E8',
+        PastelGreen:'#AFE1AF'
       }, 
     }, 
   },
   plugins: [
-    lineClamp,
+   
   ],
 }
 

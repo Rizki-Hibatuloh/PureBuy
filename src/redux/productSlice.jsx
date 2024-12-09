@@ -5,9 +5,14 @@ export const fetchProducts = createAsyncThunk(
     'products/fetchProducts',
     async () => {
       const response = await axiosInstance.get('/products');
-      return response.data;
+      return response.data.map((product) => ({
+        ...product,
+        quantity: 20, //nilai default quantity 
+      }));
     }
   );
+
+  
 
 const initialState = {
     products: [],
