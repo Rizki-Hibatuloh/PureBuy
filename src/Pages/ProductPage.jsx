@@ -1,15 +1,19 @@
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { addToCart } from '../redux/cartSlice'; // Import action addToCart
+import { addToCart } from '../redux/cartSlice';
+import { Link } from 'react-router-dom';
 
 function ProductPage() {
   const { id } = useParams(); // Ambil ID dari URL
   const products = useSelector((state) => state.product.products); // Ambil semua produk
   const dispatch = useDispatch();
-  const product = products.find((item) => item.id === parseInt(id)); // Cari produk berdasarkan ID
 
-  const [quantity, setQuantity] = useState(1); // State untuk mengelola quantity
+  const product = products.find((item) => item.id === parseInt(id)); 
+  const [quantity, setQuantity] = useState(1); 
+  const [popupMessage, setPopupMessage] = useState(''); 
+  const [showPopup, setShowPopup] = useState(false);
+  const [redirect, setRedirect] = useState(false); 
 
   if (!product) {
     return <div>Produk tidak ditemukan!</div>;
@@ -22,7 +26,14 @@ function ProductPage() {
 
   // Fungsi untuk mengurangi jumlah
   const handleDecrease = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // Tidak bisa kurang dari 1
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  // Fungsi untuk menampilkan popup message
+  const showPopupMessage = (message) => {
+    setPopupMessage(message);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2000); 
   };
 
   // Fungsi untuk menambahkan produk ke keranjang
@@ -35,17 +46,24 @@ function ProductPage() {
       quantity,
     };
     dispatch(addToCart(productToAdd));
-    alert(`${product.title} berhasil ditambahkan ke keranjang!`);
+    showPopupMessage(`${product.title} berhasil ditambahkan ke keranjang!`);
   };
 
-  // Fungsi untuk checkout
+  // Fungsi untuk handle checkout
   const handleCheckout = () => {
-    alert('Checkout berhasil! Anda akan diarahkan ke halaman pembayaran.');
-    // Anda dapat menambahkan navigasi ke halaman pembayaran di sini
+    showPopupMessage('Checkout berhasil!');
+    setTimeout(() => {
+      setRedirect(true); 
+    }, 3000); 
   };
 
   return (
-    <section className="flex justify-between mt-10 border border-red-600 mx-9">
+    <section className="flex justify-between mt-10 border border-red-600 mx-9 relative">
+      {showPopup && (
+        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded shadow-md">
+          {popupMessage}
+        </div>
+      )}
       <div className="border border-green-400 flex justify-center items-center p-4 mx-5">
         <img src={product.image} alt={product.title} className="w-3/6 object-contain" />
       </div>
@@ -75,19 +93,23 @@ function ProductPage() {
             >
               Add to Cart
             </button>
-            <button
+            <Link to="/"
               onClick={handleCheckout}
-              className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-700"
+              className="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-700 text-center"
             >
               Checkout
-            </button>
+            </Link>
           </div>
         </div>
         <div>
           <p className="text-gray-500 mb-2 mt-6">Description :</p>
           <p className="text-lg mb-4">{product.description}</p>
         </div>
-      </div>
+      </div> 
+
+      {redirect && (
+        <Link to="/" className="absolute inset-0"></Link>
+      )}
     </section>
   );
 }
